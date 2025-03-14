@@ -2,6 +2,9 @@
 
 The *University Bot Portal* is a chatbot designed to automate common academic and administrative tasks for students, faculty, and university staff. It provides real-time access to examination schedules, certificate generation, and leave request management through a *custom-built API* and *MongoDB database*, ensuring a seamless university experience.  
 
+Author: Srijan Kundu ( Username: Srijan142003)
+Co-Author: Anudip Saha ( Username: Aneebon) & Debayan Biswas ( Username: Biswas-Debayan)
+
 ## *Features & Functionality*  
 
 ### 📅 *Examination Schedule Retrieval*  
