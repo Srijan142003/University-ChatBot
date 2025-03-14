@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KIIT University Website</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('https://i.ibb.co/WvvFJp4G/KIIT-Campus-Optimized-800px.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            color: rgb(8, 3, 3);
+        }
+        .chat-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 300px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+        .chat-header {
+            background-color: green;
+            color: yellow;
+            padding: 10px;
+            text-align: center;
+            cursor: pointer;
+        }
+        .chat-messages {
+            height: 250px;
+            overflow-y: auto;
+            padding: 10px;
+            background-color: #f1f1f1;
+        }
+        .chat-input {
+            display: flex;
+            border-top: 1px solid #ccc;
+        }
+        .chat-input input {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            outline: none;
+        }
+        .chat-input button {
+            background-color: green;
+            color: yellow;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-header" onclick="toggleChat()">Chatbot</div>
+        <div class="chat-messages" id="chat-messages"></div>
+        <div class="chat-input">
+            <input type="text" id="chat-input" placeholder="Type a message..." onkeypress="handleKeyPress(event)">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+    <script>
+        // Check if user is logged in
+        if (!sessionStorage.getItem('loggedIn')) {
+            window.location.href = '/login';
+        }
+
+        function toggleChat() {
+            const chatBox = document.querySelector(".chat-container");
+            chatBox.style.display = chatBox.style.display === "none" ? "block" : "none";
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === "Enter") {
+                sendMessage();
+            }
+        }
+
+        function sendMessage() {
+            const input = document.getElementById("chat-input");
+            const message = input.value;
+            const chatMessages = document.getElementById("chat-messages");
+            
+            if (!message.trim()) return;
+            
+            chatMessages.innerHTML += `<p><strong>You:</strong> ${message}</p>`;
+            input.value = "";
+
+            let endpoint = "http://127.0.0.1:5000/query";
+            let data = { query: message };
+
+            if (message.toLowerCase().includes("leave request")) {
+                endpoint = "http://127.0.0.1:5000/leave-request";
+                data = { user_id: "STU1234", start_date: "2025-03-15", end_date: "2025-03-20", cause: "Medical" };
+            } else if (message.toLowerCase().includes("certificate")) {
+                endpoint = "http://127.0.0.1:5000/generate_certificate";
+                data = { user_id: "STU1234", certificate_type: "Bonafide" };
+            }
+
+            fetch(endpoint, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                chatMessages.innerHTML += `<p><strong>Bot:</strong> ${data.message || data.response}</p>`;
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            })
+            .catch(error => {
+                chatMessages.innerHTML += `<p><strong>Bot:</strong> Error connecting to server.</p>`;
+                console.error("Error:", error);
+            });
+        }
+    </script>
+</body>
+</html>

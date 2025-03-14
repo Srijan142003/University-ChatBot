@@ -1,0 +1,80 @@
+[{
+  "_id": {
+    "$oid": "67cc1462d83734b9a2978842"
+  },
+  "course_code": "CS101",
+  "course_name": "Introduction to Programming",
+  "exam_date": "2024-05-10",
+  "exam_time": "10:00 AM",
+  "exam_location": "Room 101",
+  "semester": "Spring",
+  "academic_year": "2024-2025",
+  "eligible_batches": [
+    "2020",
+    "2021"
+  ]
+},
+{
+  "_id": {
+    "$oid": "67cc1462d83734b9a2978843"
+  },
+  "course_code": "EE201",
+  "course_name": "Circuit Analysis",
+  "exam_date": "2024-05-12",
+  "exam_time": "02:00 PM",
+  "exam_location": "Room 202",
+  "semester": "Spring",
+  "academic_year": "2024-2025",
+  "eligible_batches": [
+    "2019",
+    "2020"
+  ]
+},
+{
+  "_id": {
+    "$oid": "67cc1462d83734b9a2978844"
+  },
+  "course_code": "ME301",
+  "course_name": "Thermodynamics",
+  "exam_date": "2024-05-15",
+  "exam_time": "11:00 AM",
+  "exam_location": "Room 303",
+  "semester": "Spring",
+  "academic_year": "2024-2025",
+  "eligible_batches": [
+    "2020",
+    "2021"
+  ]
+},
+{
+  "_id": {
+    "$oid": "67cc1462d83734b9a2978845"
+  },
+  "course_code": "CE401",
+  "course_name": "Structural Analysis",
+  "exam_date": "2024-05-18",
+  "exam_time": "09:00 AM",
+  "exam_location": "Room 404",
+  "semester": "Spring",
+  "academic_year": "2024-2025",
+  "eligible_batches": [
+    "2019",
+    "2020"
+  ]
+},
+{
+  "_id": {
+    "$oid": "67cc1462d83734b9a2978846"
+  },
+  "course_code": "CH501",
+  "course_name": "Organic Chemistry",
+  "exam_date": "2024-05-20",
+  "exam_time": "01:00 PM",
+  "exam_location": "Room 505",
+  "semester": "Spring",
+  "academic_year": "2024-2025",
+  "eligible_batches": [
+    "2020",
+    "2021"
+  ]
+}]

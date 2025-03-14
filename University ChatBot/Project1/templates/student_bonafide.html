@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bonafide Certificate</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; padding: 50px; }
+        .certificate { border: 2px solid #000; padding: 30px; width: 70%; margin: auto; }
+        .title { font-size: 24px; font-weight: bold; text-decoration: underline; }
+        .content { text-align: left; margin-top: 20px; line-height: 1.8; }
+        .footer { display: flex; justify-content: space-between; margin-top: 50px; }
+        .footer div { width: 30%; text-align: center; }
+    </style>
+</head>
+<body>
+    <div class="certificate">
+        <div class="title">BONAFIDE CERTIFICATE</div>
+        <div class="content">
+            This is to certify that Mr./Ms. <b>{{ student['name'] }}</b>,
+            bearing roll no <b>{{ student['user_id'] }}</b>,
+            is a student of <b>{{ student['branch'] }}</b> branch,
+            admitted in the year <b>{{ student['admission_year'] }}</b>.
+            He/She is a bonafide student of <b>XYZ University</b>.
+        </div>
+        <div class="footer">
+            <div>
+                ________________<br>
+                <b>Signature</b><br>
+                Registrar/Principal/Dean
+            </div>
+            <div>
+                <b>Date</b><br>
+                {{ current_date }}
+            </div>
+        </div>
+    </div>
+</body>
+</html>

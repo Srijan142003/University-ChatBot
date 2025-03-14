@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KIIT University Website</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('https://i.ibb.co/WvvFJp4G/KIIT-Campus-Optimized-800px.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            color: rgb(8, 3, 3);
+        }
+        .welcome-message {
+            position: absolute;
+            top: 20px;
+            text-align: center;
+            width: 100%;
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+        .chat-container {
+            width: 1000px;
+            height: 500px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding-left: 20px;
+            padding-right: 20px; /* Add spacing between the left and right border and the text */
+        }
+        .chat-header {
+            background-color: green;
+            color: yellow;
+            padding: 10px;
+            text-align: center;
+            cursor: pointer;
+            width: 100%;
+        }
+        .chat-messages {
+            flex: 1;
+            width: 100%;
+            overflow-y: auto;
+            padding: 10px;
+            background-color: #f1f1f1;
+        }
+        .chat-input {
+            display: flex;
+            width: 100%;
+            border-top: 1px solid #ccc;
+        }
+        .chat-input input {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            outline: none;
+        }
+        .chat-input button {
+            background-color: green;
+            color: yellow;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+        }
+    </style>
+    <script>
+        function toggleChat() {
+            const chatBox = document.querySelector(".chat-container");
+            chatBox.style.display = chatBox.style.display === "none" ? "block" : "none";
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === "Enter") {
+                sendMessage();
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const userName = "{{ session['user_name'] }}";
+            const userRole = "{{ session['role'] }}";
+            const chatMessages = document.getElementById("chat-messages");
+
+            // Display welcome message
+            const welcomeMessage = `WELCOME ${userName}, ROLE: ${userRole.toUpperCase()}`;
+            document.body.insertAdjacentHTML('afterbegin', `<div class="welcome-message">${welcomeMessage}</div>`);
+            chatMessages.innerHTML += `<p><strong>Bot:</strong> Welcome ${userName}!</p>`;
+        });
+
+        function sendMessage() {
+            const input = document.getElementById("chat-input");
+            const message = input.value;
+            const chatMessages = document.getElementById("chat-messages");
+
+            if (!message.trim()) return;
+
+            chatMessages.innerHTML += `<p><strong>You:</strong> ${message}</p>`;
+            input.value = "";
+
+            let endpoint = "http://127.0.0.1:5000/query";
+            let data = { query: message };
+
+            if (message.toLowerCase().includes("leave request")) {
+                chatMessages.innerHTML += `<p><strong>Bot:</strong> Please enter the leave type (e.g., sick, casual):</p>`;
+                input.value = ""; // Clear input box
+                input.onkeypress = function(event) {
+                    if (event.key === "Enter") {
+                        const leaveType = input.value;
+                        chatMessages.innerHTML += `<p><strong>You:</strong> ${leaveType}</p>`;
+                        chatMessages.innerHTML += `<p><strong>Bot:</strong> Please enter the start date (YYYY-MM-DD):</p>`;
+                        input.value = ""; // Clear input box
+                        input.onkeypress = function(event) {
+                            if (event.key === "Enter") {
+                                const startDate = input.value;
+                                chatMessages.innerHTML += `<p><strong>You:</strong> ${startDate}</p>`;
+                                chatMessages.innerHTML += `<p><strong>Bot:</strong> Please enter the end date (YYYY-MM-DD):</p>`;
+                                input.value = ""; // Clear input box
+                                input.onkeypress = function(event) {
+                                    if (event.key === "Enter") {
+                                        const endDate = input.value;
+                                        chatMessages.innerHTML += `<p><strong>You:</strong> ${endDate}</p>`;
+                                        endpoint = "http://127.0.0.1:5000/leave-request";
+                                        data = { 
+                                            user_id: "{{ session['user_id'] }}", 
+                                            start_date: startDate, 
+                                            end_date: endDate, 
+                                            cause: "User requested leave", 
+                                            leave_type: leaveType 
+                                        };
+                                        fetch(endpoint, {
+                                            method: "POST",
+                                            headers: { "Content-Type": "application/json" },
+                                            body: JSON.stringify(data)
+                                        })
+                                        .then(response => response.json())
+                                        .then(data => {
+                                            chatMessages.innerHTML += `<p><strong>Bot:</strong> ${data.message}</p>`;
+                                            chatMessages.scrollTop = chatMessages.scrollHeight;
+                                        })
+                                        .catch(error => {
+                                            chatMessages.innerHTML += `<p><strong>Bot:</strong> Error connecting to server.</p>`;
+                                            console.error("Error:", error);
+                                        });
+                                        input.value = ""; // Clear input box
+                                        input.onkeypress = handleKeyPress;
+                                    }
+                                };
+                            }
+                        };
+                    }
+                };
+                return;
+            } else if (message.toLowerCase().includes("certificate")) {
+                chatMessages.innerHTML += `<p><strong>Bot:</strong> Please enter the certificate type (bonafide/noc):</p>`;
+                input.value = ""; // Clear input box
+                input.onkeypress = function(event) {
+                    if (event.key === "Enter") {
+                        const certificateType = input.value;
+                        endpoint = "http://127.0.0.1:5000/generate_certificate";
+                        data = { user_id: "{{ session['user_id'] }}", certificate_type: certificateType };
+                        fetch(endpoint, {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify(data)
+                        })
+                        .then(response => response.text())
+                        .then(data => {
+                            chatMessages.innerHTML += `<p><strong>Bot:</strong> ${data}</p>`;
+                            chatMessages.scrollTop = chatMessages.scrollHeight;
+                        })
+                        .catch(error => {
+                            chatMessages.innerHTML += `<p><strong>Bot:</strong> Error connecting to server.</p>`;
+                            console.error("Error:", error);
+                        });
+                        input.value = ""; // Clear input box
+                        input.onkeypress = handleKeyPress;
+                    }
+                };
+                return;
+            }
+
+            fetch(endpoint, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.response.startsWith("<table>")) {
+                    chatMessages.innerHTML += `<div><strong>Bot:</strong> ${data.response}</div>`;
+                } else {
+                    chatMessages.innerHTML += `<p><strong>Bot:</strong> ${data.message || data.response}</p>`;
+                }
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            })
+            .catch(error => {
+                chatMessages.innerHTML += `<p><strong>Bot:</strong> Error connecting to server.</p>`;
+                console.error("Error:", error);
+            });
+            input.value = ""; // Clear input box
+        }
+    </script>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-header" onclick="toggleChat()">Chatbot</div>
+        <div class="chat-messages" id="chat-messages"></div>
+        <div class="chat-input">
+            <input type="text" id="chat-input" placeholder="Type a message..." onkeypress="handleKeyPress(event)">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+</body>
+</html>

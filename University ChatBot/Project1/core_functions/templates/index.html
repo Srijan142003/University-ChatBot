@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certificate Generator</title>
+</head>
+<body>
+    <h2>Certificate Generator</h2>
+    <form id="certificateForm">
+        <label for="user_id">Enter User ID:</label><br>
+        <input type="text" id="user_id" name="user_id" required><br>
+        <label for="certificate_type">Select Certificate Type:</label><br>
+        <select id="certificate_type" name="certificate_type">
+            <option value="bonafide">Bonafide Certificate</option>
+            <option value="noc">No Objection Certificate</option>
+        </select><br>
+        <button type="submit">Generate Certificate</button>
+    </form>
+
+    <script>
+        const form = document.getElementById('certificateForm');
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const userId = document.getElementById('user_id').value;
+            const certificateType = document.getElementById('certificate_type').value;
+
+            try {
+                const response = await fetch('/generate_certificate', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ user_id: userId, certificate_type: certificateType })
+                });
+
+                const data = await response.text();
+                document.body.innerHTML += data;
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        });
+    </script>
+</body>
+</html>

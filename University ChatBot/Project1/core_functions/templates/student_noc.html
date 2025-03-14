@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>No Objection Certificate</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; padding: 50px; }
+        .certificate { border: 2px solid #000; padding: 30px; width: 70%; margin: auto; }
+        .title { font-size: 24px; font-weight: bold; text-decoration: underline; }
+        .content { text-align: left; margin-top: 20px; line-height: 1.8; }
+        .footer { display: flex; justify-content: space-between; margin-top: 50px; }
+        .footer div { width: 30%; text-align: center; }
+    </style>
+</head>
+<body>
+    <div class="certificate">
+        <div class="title">NO OBJECTION CERTIFICATE</div>
+        <div class="content">
+
+            To whom it may concern,
+            <br>
+            <br>
+            This is to certify that Mr./Ms. <b>{{ student['name'] }}</b>,
+            bearing roll no <b>{{ student['user_id'] }}</b>,
+            is a bonafide student of <b>XYZ UNIVERSITY</b>. The student is enrolled in <b>{{ student['branch'] }}</b> and was
+            admitted in the academic year <b>{{ student['admission_year'] }}</b>.
+            <br>
+            <br>
+            The university has no objection to the student pursuing any academic or professional opportunities outside the institution, provided it does not interfere with their regular coursework and responsibilities.
+            <br>
+            <br>
+            This certificate is issued upon request for official purposes.
+        </div>
+        <div class="footer">
+            <div>
+                _______________________<br>
+                <b>Authorized Signatory</b><br>
+                XYZ University
+            </div>
+            <div>
+                <br>
+                <b>Date</b><br>
+                {{ current_date }}
+            </div>
+        </div>
+    </div>
+</body>
+</html>

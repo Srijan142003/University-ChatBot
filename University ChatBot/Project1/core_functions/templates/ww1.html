@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exam Chatbot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        #chat-container {
+            width: 500px;
+            height: 600px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            overflow-y: auto;
+        }
+        #chat-container .message {
+            margin-bottom: 10px;
+        }
+        #chat-container .message.user {
+            text-align: right;
+            background-color: #f0f0f0;
+            padding: 5px;
+            border-radius: 5px;
+        }
+        #chat-container .message.bot {
+            text-align: left;
+            background-color: #e0e0e0;
+            padding: 5px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Exam Chatbot</h1>
+    <div id="chat-container">
+        <div class="message bot">Welcome to the Exam Chatbot! Ask about exams.</div>
+    </div>
+    <input type="text" id="user-input" placeholder="Type your query here...">
+    <button id="send-btn">Send</button>
+
+    <script>
+        const chatContainer = document.getElementById('chat-container');
+        const userInput = document.getElementById('user-input');
+        const sendBtn = document.getElementById('send-btn');
+
+        sendBtn.addEventListener('click', async () => {
+            const userQuery = userInput.value.trim();
+            if (!userQuery) return;
+
+            // Display user query in chat
+            const userMessage = document.createElement('div');
+            userMessage.classList.add('message', 'user');
+            userMessage.textContent = userQuery;
+            chatContainer.appendChild(userMessage);
+
+            // Clear input field
+            userInput.value = '';
+
+            // Send request to backend
+            try {
+                const response = await fetch('/query', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ query: userQuery })
+                });
+
+                const data = await response.json();
+                const botMessage = document.createElement('div');
+                botMessage.classList.add('message', 'bot');
+                botMessage.textContent = data.response;
+                chatContainer.appendChild(botMessage);
+
+                // Scroll to bottom of chat container
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+            } catch (error) {
+                console.error('Error:', error);
+                const botMessage = document.createElement('div');
+                botMessage.classList.add('message', 'bot');
+                botMessage.textContent = 'Error occurred. Please try again.';
+                chatContainer.appendChild(botMessage);
+            }
+        });
+    </script>
+</body>
+</html>

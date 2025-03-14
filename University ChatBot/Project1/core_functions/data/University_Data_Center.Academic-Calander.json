@@ -1,0 +1,60 @@
+[{
+  "_id": {
+    "$oid": "67cc1421d83734b9a2978839"
+  },
+  "event_name": "Midterm Exams",
+  "start_date": "2024-04-15",
+  "end_date": "2024-04-20",
+  "description": "Midterm exams for all courses",
+  "event_type": "Exam",
+  "academic_year": "2024-2025",
+  "semester": "Spring"
+},
+{
+  "_id": {
+    "$oid": "67cc1421d83734b9a297883a"
+  },
+  "event_name": "Spring Break",
+  "start_date": "2024-03-10",
+  "end_date": "2024-03-17",
+  "description": "Spring break for all students",
+  "event_type": "Holiday",
+  "academic_year": "2023-2024",
+  "semester": "Spring"
+},
+{
+  "_id": {
+    "$oid": "67cc1421d83734b9a297883b"
+  },
+  "event_name": "Final Exams",
+  "start_date": "2024-05-15",
+  "end_date": "2024-05-22",
+  "description": "Final exams for all courses",
+  "event_type": "Exam",
+  "academic_year": "2024-2025",
+  "semester": "Spring"
+},
+{
+  "_id": {
+    "$oid": "67cc1421d83734b9a297883c"
+  },
+  "event_name": "Semester Initiation",
+  "start_date": "2024-01-08",
+  "end_date": "2024-01-08",
+  "description": "First day of the Spring semester",
+  "event_type": "Lecture",
+  "academic_year": "2023-2024",
+  "semester": "Spring"
+},
+{
+  "_id": {
+    "$oid": "67cc1421d83734b9a297883d"
+  },
+  "event_name": "End of Semester",
+  "start_date": "2024-05-31",
+  "end_date": "2024-05-31",
+  "description": "Last day of the Spring semester",
+  "event_type": "Other",
+  "academic_year": "2024-2025",
+  "semester": "Spring"
+}]
