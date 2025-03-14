@@ -1,6 +1,6 @@
 # *University Bot Portal*  
 
-The *University Bot Portal* is an AI-powered chatbot designed to automate common academic and administrative tasks for students, faculty, and university staff. It provides real-time access to examination schedules, certificate generation, and leave request management through a *custom-built API* and *MongoDB database*, ensuring a seamless university experience.  
+The *University Bot Portal* is a chatbot designed to automate common academic and administrative tasks for students, faculty, and university staff. It provides real-time access to examination schedules, certificate generation, and leave request management through a *custom-built API* and *MongoDB database*, ensuring a seamless university experience.  
 
 ## *Features & Functionality*  
 
