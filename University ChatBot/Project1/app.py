@@ -19,7 +19,7 @@ CORS(app)
 logging.basicConfig(level=logging.INFO)
 
 # MongoDB Connection
-MONGO_URI = os.environ.get('MONGO_URI', "mongodb+srv://srijankundu14:tLH9raY57j3bQH9k@cluster1.xdb31.mongodb.net/University_Data_Center")
+MONGO_URI = os.environ.get('MONGO_URI', "mongodb+srv://srijankundu14:password@cluster1.xdb31.mongodb.net/University_Data_Center")
 client = MongoClient(MONGO_URI)
 db = client["University_Data_Center"]
 student_collection = db["student"]
