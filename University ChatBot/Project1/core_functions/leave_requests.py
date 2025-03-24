@@ -5,7 +5,7 @@ from flask import Flask, request, jsonify
 from datetime import datetime
 
 # Connect to MongoDB
-client = MongoClient('mongodb+srv://srijankundu14:tLH9raY57j3bQH9k@cluster1.xdb31.mongodb.net/')
+client = MongoClient('mongodb+srv://srijankundu14:password@cluster1.xdb31.mongodb.net/')
 db = client['University_Data_Center']
 students_collection = db['student']
 teachers_collection = db['teachers']
